@@ -1,0 +1,51 @@
+﻿@inherits LayoutComponentBase
+
+<MudThemeProvider @ref="_mudThemeProvider"
+    @bind-IsDarkMode="_isDarkMode" 
+Theme="Configuration.Theme" />
+<MudSnackbarProvider />
+
+<MudLayout>
+    <MudAppBar>
+        Dima
+        <MudSpacer/>
+        <MudSwitch @bind-Value="@_isDarkMode" />
+    </MudAppBar>
+    <MudMainContent>
+        <MudContainer>
+            @Body
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>
+
+@code{
+    private bool _isDarkMode = true;
+
+    #region Mudando o tema de acordo com as preferencias do windows
+    // System Preferences Wacther
+    private MudThemeProvider _mudThemeProvider = null!;
+
+    /// <summary>
+    /// Executa depois de todos os elementos serem renderizados na tela
+    /// </summary>
+    /// <param name="firstRender">Marca se é a primeira renderização</param>
+    /// <returns></returns>
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+        {
+            _isDarkMode = await _mudThemeProvider.GetSystemPreference();
+            await _mudThemeProvider.WatchSystemPreference(OnSystemPreferenceChanged);
+            StateHasChanged();
+        }
+    }
+
+    private Task OnSystemPreferenceChanged(bool newValue)
+    {
+        _isDarkMode = newValue;
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
+
+    #endregion
+}
