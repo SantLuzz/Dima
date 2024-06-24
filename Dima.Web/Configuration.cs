@@ -6,7 +6,7 @@ namespace Dima.Web
     {
         public const string HttpClientName = "dimaApi";
 
-        public static string BackendUrl { get; set; } = "http://localhost:5056";
+        public static string BackendUrl { get; set; } = string.Empty;
 
         public static MudTheme Theme = new()
         {
