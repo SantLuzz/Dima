@@ -33,6 +33,8 @@ namespace Dima.Api.Endpoints.Transactions
             {
                 PageNumber = pageNumber,
                 PageSize = pageSize,
+                StartDate = startDate,
+                EndDate = endDate,
                 UserId = user.Identity?.Name ?? string.Empty
             };
 

@@ -3,7 +3,6 @@ using Dima.Core.Handlers;
 using Dima.Core.Models;
 using Dima.Core.Requests.Categories;
 using Dima.Core.Responses;
-using Microsoft.Identity.Client;
 using System.Security.Claims;
 
 namespace Dima.Api.Endpoints.Categories

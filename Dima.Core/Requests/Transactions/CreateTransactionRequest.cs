@@ -14,7 +14,7 @@ namespace Dima.Core.Requests.Transactions
         public string Title { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Tipo inválido!")]
-        public ETransactionType Type { get; set; }
+        public ETransactionType Type { get; set; } = ETransactionType.WithDraw;
 
         [Required(ErrorMessage = "Valor inválida!")]
         public decimal Amount { get; set; }

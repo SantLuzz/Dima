@@ -14,6 +14,9 @@ namespace Dima.Api.Handlers
         {
             try
             {
+                if (request is { Type: Core.Enums.ETransactionType.WithDraw, Amount: >= 0} )
+                    request.Amount *= -1;
+
                 var transaction = new Transaction
                 {
                     UserId = request.UserId,
@@ -30,7 +33,7 @@ namespace Dima.Api.Handlers
 
                 return new Response<Transaction?>(transaction, code: 201, "Transação criada com sucesso!");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return new Response<Transaction?>(null, 500, "Não foi possível criar a transação!");
             }
@@ -52,7 +55,7 @@ namespace Dima.Api.Handlers
 
                 return new Response<Transaction?>(transaction);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return new Response<Transaction?>(null, 500, "Não foi possível alterar a transação!");
             }
@@ -71,7 +74,7 @@ namespace Dima.Api.Handlers
                     ? new Response<Transaction?>(null, 404, "Transação não encontrada!")
                     : new Response<Transaction?>(transaction);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return new Response<Transaction?>(null, 500, "Não foi possível encontrar a transação!");
             }
@@ -84,7 +87,7 @@ namespace Dima.Api.Handlers
                 request.StartDate ??= DateTime.Now.GetFirstDay();
                 request.EndDate ??= DateTime.Now.GetLastDay();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return new PagedResponse<List<Transaction>?> (null, 500, "Não foi possível determinar a data de ínicio e fim da requisição!");
             }
@@ -94,10 +97,10 @@ namespace Dima.Api.Handlers
                 var query = context
                 .Transactions
                 .AsNoTracking()
-                .Where(x => x.CreatedAt >= request.StartDate
-                && x.CreatedAt <= request.EndDate
+                .Where(x => x.PaidOrReceivedAt >= request.StartDate
+                && x.PaidOrReceivedAt <= request.EndDate
                 && x.UserId == request.UserId)
-                .OrderBy(x => x.CategoryId);
+                .OrderBy(x => x.PaidOrReceivedAt);
 
                 var transaction = await query
                     .Skip((request.PageNumber - 1) * request.PageSize)
@@ -118,6 +121,9 @@ namespace Dima.Api.Handlers
         {
             try
             {
+                if (request is { Type: Core.Enums.ETransactionType.WithDraw, Amount: >= 0 })
+                    request.Amount *= -1;
+
                 var transaction = await context
                     .Transactions
                     .FirstOrDefaultAsync(x => x.Id == request.Id && x.UserId == request.UserId);
@@ -136,7 +142,7 @@ namespace Dima.Api.Handlers
 
                 return new Response<Transaction?>(transaction);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return new Response<Transaction?>(null, 500, "Não foi possível alterar a transação!");
             }
