@@ -1,7 +1,6 @@
 ﻿using Dima.Api.Common.Api;
 using Dima.Api.Endpoints.Categories;
 using Dima.Api.Endpoints.Identity;
-using Dima.Api.Endpoints.Orders;
 using Dima.Api.Endpoints.Reports;
 using Dima.Api.Endpoints.Transactions;
 using Dima.Api.Models;
@@ -55,13 +54,6 @@ namespace Dima.Api.Endpoints
                 .MapEndpoints<GetFinancialSummaryEndpoint>()
                 .MapEndpoints<GetIncomeByCategoryEndpoint>()
                 .MapEndpoints<GetIncomesAndExpensesEndpoint>();
-
-            endpoint.MapGroup("v1/orders")
-                .WithTags("Orders")
-                .RequireAuthorization()
-                .MapEndpoints<CreateOrderEndpoint>()
-                .MapEndpoints<ConfirmOrderEndpoint>();
-
             
         }
 

@@ -26,6 +26,8 @@ namespace Dima.Api.Data
         public DbSet<IncomesAndExpenses> IncomesAndExpenses { get; set; } = null!;
         public DbSet<IncomesByCategories> IncomesByCategories { get; set; } = null!;
         public DbSet<ExpensesByCategory> ExpensesByCategories { get; set; } = null!;
+        public DbSet<Product> Products { get; set; } = null!;
+        public DbSet<Vouncher> Vounchers { get; set; } = null!;
         public DbSet<Order> Orders { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
