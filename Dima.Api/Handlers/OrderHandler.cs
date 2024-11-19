@@ -177,9 +177,18 @@ public class OrderHandler(AppDbContext context) : IOrderHandler
         return new Response<Order?>(order, 200, $"Pedido {order.Number} pago com sucesso.");
     }
 
-    public Task<Response<Order?>> RefoundAsync(RefoundOrderRequest request)
+    public async Task<Response<Order?>> RefoundAsync(RefoundOrderRequest request)
     {
-        throw new NotImplementedException();
+        Order? order = null;
+        try
+        {
+                return null;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 
     public Task<PagedResponse<List<Order>?>> GetAllAsync(GetAllOrdersRequest request)
